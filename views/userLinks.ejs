@@ -1,0 +1,37 @@
+<%- include("./includes/header.ejs") %>
+  </head>
+  <body>
+    <%- include("./includes/nav.ejs") %>
+    <main>
+      <div class="pt-3 container centered">
+        <h1>User Links</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><%= user.username %></h5>
+                <p class="card-text">Name: <%= user.name %> | Email: <%= user.email %></p>
+            </div>
+        </div>
+        <div class="pt-4 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Highlight</th>
+                    </tr>
+                </thead>
+                <% user.links.forEach(link => { %>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><%= link.title %></th>
+                            <td><a href="<%= link.url %>" target="_blank"><%= link.url %></a></td>
+                            <td><% if (link.highlight) { %><i class="text-success fas fa-check"><% } else { %><i class="text-danger fas fa-times"><% } %></i></td>
+                        </tr>
+                    </tbody>
+                <% }) %>
+            </table>
+        </div>
+        <a class="btn btn-lg btn-block btn-secondary" href="/admin"><i class="fas fa-long-arrow-alt-left"></i> Back To Admin Page!</a>
+      </div>
+    </main>
+  <%- include("./includes/footer.ejs") %>

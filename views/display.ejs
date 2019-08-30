@@ -1,0 +1,14 @@
+<%- include("./includes/header.ejs") %>
+  </head>
+  <body>
+    <%- include("./includes/nav.ejs") %>
+    <main>
+      <div class="container p-3 centered display-container">
+        <h1><%= userData.name %></h1>
+        <hr>
+        <% userData.links.forEach(link => { %>
+            <a class="display-button btn btn-lg btn-block <% if (link.highlight) { %>btn-success<% } else { %>btn-info<% } %>" href="<%= link.url %>" target="_blank"><%= link.title %></a>
+        <% }) %>
+      </div>
+    </main>
+  <%- include("./includes/footer.ejs") %>

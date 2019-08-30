@@ -1,0 +1,152 @@
+<%- include("./includes/header.ejs") %>
+  </head>
+  <body>
+    <%- include("./includes/nav.ejs") %>
+    <main>
+      <div class="container p-3">
+        <% if (successMessage.length > 0) { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= successMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        <% if (errorMessage.length > 0) { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= errorMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-lg btn-dark btn-block display-button" href="/<%= userData.username %>" target="_blank">Visit My Infy Link</a>
+            </div>
+            <div class="col">
+                <a id="changeUsernameButton" class="btn btn-lg btn-dark btn-block display-button" >Change Username</a>
+            </div>
+            <div class="col">
+                <a id="changePasswordButton" class="btn btn-lg btn-dark btn-block display-button" >Change Password</a>
+            </div>
+        </div>
+        <hr>
+        <div class="container p-3" id="changeUsernameForm">
+            <form class="justify-content-center form-inline" action="/change-username" method="POST">
+            <div class="form-group row">
+                <label for="newUsername" class="col-sm-3 col-form-label">Username</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="newUsername" name="newUsername" placeholder="Enter New Username" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-9">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+            </form>
+            <hr>
+        </div>
+        <div class="container p-3" id="changePasswordForm">
+            <form class="justify-content-center" action="/change-password" method="POST">
+            <div class="form-group row">
+                <label for="newPassword" class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter New Password" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="newPasswordConfirm" class="col-sm-3 col-form-label">Confirm Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="newPasswordConfirm" name="newPasswordConfirm" placeholder="Confirm New Password" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-9">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                </div>
+            </div>
+            </form>
+            <hr>
+        </div>
+        <div class="container-form">
+            <form action="/<% if (editing) { %>edit-link<% } else { %>add-link<% } %>" method="POST">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" value="<% if (editing) { %><%= link.title %><% } %>">
+                      </div>
+                </div>
+                <div class="form-group row">
+                    <label for="url" class="col-sm-2 col-form-label">URL</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter URL" value="<% if (editing) { %><%= link.url %><% } %>">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2">Highlight</div>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="highlight" value=true id="highlightTrue" <% if (editing && link.highlight) { %>checked<% } %>>
+                            <label class="form-check-label" for="highlightTrue">
+                                Yes
+                            </label>
+                            </div>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="highlight" value=false id="highlightFalse" <% if (editing && !link.highlight) { %>checked<% } else if(!editing) { %>checked<% } %>>
+                            <label class="form-check-label" for="highlightFalse">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% if (editing) { %>
+                    <input type="hidden" value="<%= link._id %>" name="linkId">
+                    <% } %>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="btn btn-primary"><% if (editing) { %>Update Link<% } else { %>Add Link<% } %></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="pt-2 container centered">
+            <% userData.links.forEach(link =>{ %>
+                <div class="card my-3 <% if (link.highlight) { %>highlight-dashboard<% } %>">
+                    <div class="card-body centered">
+                        <h5 class="card-title"><%= link.title %></h5>
+                        <p class="card-text"><a href="<%= link.url %>" target="_blank"><%= link.url %></a></p>
+                        <div class="mr-3 d-inline">
+                            <a href="/edit-link/<%= link._id %>?edit=true" class="btn btn-warning btn-sm d-inline">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </div>
+                        <div class="mr-3 d-inline">
+                            <form class="d-inline" action="/delete-link" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" value="<%= link._id %>" name="linkId">
+                            </form>
+                        </div>
+                        <div class="mr-3 d-inline">
+                            <form class="d-inline" action="/toggle-highlight" method="POST">
+                                <input type="hidden" value="<%= link._id %>" name="linkId">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-marker"></i> Highlight
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+      </div>
+    </main>
+  <%- include("./includes/footer.ejs") %>

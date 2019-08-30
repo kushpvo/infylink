@@ -1,0 +1,44 @@
+<%- include("./includes/header.ejs") %>
+  </head>
+  <body>
+    <%- include("./includes/nav.ejs") %>
+    <main>
+      <div class="container p-3">
+        <span class="d-flex justify-content-center"><h1>Changelog</h1></span>
+        <span class="pb-3 d-flex justify-content-center"><h5>All notable changes to this project will be documented in this file.</h5></span>
+        <div class="card m-3">
+            <div class="card-body">
+                <h5 class="card-title">Version <strong>1.0.2</strong></h5>
+                <ul>
+                    <li class="card-text">Added ability to change username in the dashboard</li>
+                    <li class="card-text">Added input validation in login and signup forms</li>
+                    <li class="card-text">Minimum 6 characters password needed</li>
+                    <li class="card-text">Passwords are now encrypted and stored in database</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card m-3">
+            <div class="card-body">
+                <h5 class="card-title">Version <strong>1.0.1</strong></h5>
+                <ul>
+                    <li class="card-text">Added signup successful email</li>
+                    <li class="card-text">Added password reset via email</li>
+                    <li class="card-text">Added ability to change password in the dashboard</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card m-3">
+            <div class="card-body">
+                <h5 class="card-title">Version <strong>1.0.0</strong></h5>
+                <ul>
+                    <li class="card-text"><strong>First Release!</strong></li>
+                    <li class="card-text">Added basic user authentication/authoriztion mechinsm</li>
+                    <li class="card-text">Added ability to add links to your profile</li>
+                    <li class="card-text">Added ability to edit your links and title</li>
+                    <li class="card-text">Added ability to highlight your links in your profile</li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </main>
+  <%- include("./includes/footer.ejs") %>

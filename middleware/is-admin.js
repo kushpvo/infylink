@@ -1,0 +1,9 @@
+module.exports = (req, res, next) => {
+  if (!req.session.isAdmin) {
+    if (req.session.isLoggedIn) {
+      return res.redirect("/dashboard");
+    }
+    return res.redirect("/login");
+  }
+  next();
+};

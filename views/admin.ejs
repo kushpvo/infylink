@@ -1,0 +1,32 @@
+<%- include("./includes/header.ejs") %>
+  </head>
+  <body>
+    <%- include("./includes/nav.ejs") %>
+    <main>
+      <div class="pt-3 container centered">
+        <h1>Users</h1>
+        <div class="pt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Link</th>
+                    </tr>
+                </thead>
+                <% users.forEach(user => { %>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><%= user.name %></th>
+                            <td><%= user.email %></td>
+                            <td><%= user.username %></td>
+                            <td><a href="/admin/user/<%= user._id %>/links">Links</a></td>
+                        </tr>
+                    </tbody>
+                <% }) %>
+            </table>
+        </div>
+      </div>
+    </main>
+  <%- include("./includes/footer.ejs") %>

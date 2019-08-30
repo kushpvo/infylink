@@ -1,0 +1,49 @@
+<%- include("../includes/header.ejs") %>
+  </head>
+
+  <body>
+    <%- include("../includes/nav.ejs") %>
+
+    <main>
+      <div class="container pt-5 container-form">
+        <% if (errorMessage.length > 0) { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= errorMessage %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+        <% if (successMessage.length > 0) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <%= successMessage %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        <% } %>
+        <form action="/login" method="POST" novalidate>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Enter Email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Enter Password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-9">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="d-inline btn btn-primary btn-lg">Login</button>
+            <span class="pl-3 d-inline"> or <a class="pl-1" href="/signup">Signup</a></span>
+            </div>
+          </div>
+        </form>
+        <a href="/reset">Reset Password</a>
+      </div>
+    </main>
+<%- include("../includes/footer.ejs") %>
