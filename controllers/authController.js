@@ -6,10 +6,7 @@ const { validationResult } = require("express-validator");
 
 const User = require("../models/userModel");
 
-const SENDGRID_API_KEY =
-  "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";
-
-sgMail.setApiKey(SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
